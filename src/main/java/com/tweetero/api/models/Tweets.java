@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 public class Tweets {
-    private void Tweets(TweetsDTO req) {
+    public  Tweets(TweetsDTO req) {
         this.username = req.username();
         this.avatar = req.avatar();
         this.text = req.text();
