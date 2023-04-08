@@ -25,7 +25,7 @@ public class TweetsController {
     @PostMapping("/tweets")
     public String create(@RequestBody TweetsDTO req) {
         Users user = userRepository.getByUsername(req.username());
-        repository.save(new Tweets(req));
+        repository.save(new Tweets(req,user.getAvatar()));
         return "OK";
     }
 }
