@@ -1,6 +1,12 @@
 package com.tweetero.api.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +29,18 @@ public class TweetsController {
     private UsersRepository userRepository;
 
     @PostMapping("/tweets")
-    public String create(@RequestBody TweetsDTO req) {
+    public ResponseEntity<String> create(@RequestBody TweetsDTO req) {
         Users user = userRepository.getByUsername(req.username());
-        repository.save(new Tweets(req,user.getAvatar()));
-        return "OK";
+        if (user != null) {
+            repository.save(new Tweets(req, user.getAvatar()));
+            return ResponseEntity.status(HttpStatus.OK).body("Tweet created successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
+        }
+    }
+
+    @GetMapping("/tweets/{username}")
+    public List<Tweets> getByName(@PathVariable String username) {
+        return repository.getByUsername(username);
     }
 }
