@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 public class Tweets {
-    public  Tweets(TweetsDTO req, URL avatar) {
-        this.username = req.username();
-        this.avatar = avatar;
-        this.text = req.tweet();
+    public  Tweets(TweetsDTO req, Users user) {
+        this.username = user.getUsername();
+        this.avatar = user.getAvatar();
+        this.text = req.text();
 
     }
 
